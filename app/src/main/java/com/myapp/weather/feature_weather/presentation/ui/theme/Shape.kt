@@ -1,4 +1,4 @@
-package com.myapp.weather.ui.theme
+package com.myapp.weather.feature_weather.presentation.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

@@ -1,16 +1,13 @@
 package com.myapp.weather
 
-import android.content.Context
-import android.provider.SyncStateContract
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.myapp.weather.model.Main
 import com.myapp.weather.model.MainWeather
-import com.myapp.weather.model.Weather
+import com.myapp.weather.model.WeatherDescription
 import com.myapp.weather.repository.Repository
 import com.myapp.weather.utils.Constants
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -35,7 +32,7 @@ class MainActivityViewModel(private val repository: Repository): ViewModel() {
         getCurrentWeather(location = "Moscow")
     }
 
-    var myResponse: MutableState<MainWeather> = mutableStateOf(MainWeather(main = Main(), weather = listOf(Weather())))
+    var myResponse: MutableState<MainWeather> = mutableStateOf(MainWeather(main = Main(), weather = listOf(WeatherDescription())))
 
     fun getCurrentWeather(location: String){
 

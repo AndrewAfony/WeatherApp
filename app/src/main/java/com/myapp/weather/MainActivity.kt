@@ -1,17 +1,18 @@
 package com.myapp.weather
 
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.*
-import androidx.compose.foundation.*
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -20,20 +21,13 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.graphics.LinearGradient
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -41,13 +35,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import coil.compose.rememberImagePainter
 import com.myapp.weather.repository.Repository
 import com.myapp.weather.ui.theme.WeatherTheme
-import com.myapp.weather.utils.Constants
 import java.util.*
 
 private const val TAG = "MainActivity"
@@ -67,7 +59,6 @@ class MainActivity : ComponentActivity() {
         setContent {
 
             val location = viewModel.location.value
-
 
             val scaffoldState = rememberScaffoldState()
             Scaffold (
@@ -99,7 +90,6 @@ class MainActivity : ComponentActivity() {
                         viewModel = viewModel
                     )
                 }
-
             }
         }
 
@@ -156,12 +146,13 @@ fun App(
             .padding(start = 16.dp, end = 16.dp, top = 4.dp)
             .fillMaxWidth(),
             elevation = 4.dp,
-            shape = RoundedCornerShape(8.dp)
+            shape = RoundedCornerShape(12.dp)
         ) {
             Box(modifier = Modifier
                 .background(
-                brush = Brush.verticalGradient(listOf(Color(0xFF446CCF), Color(0xFF2D4AD8)))
-            )) {
+                    brush = Brush.verticalGradient(listOf(Color(0xFF4665FF), Color(0xFF0B0FFF)))
+                )
+            ) {
 
                 Row(modifier = Modifier
                     .padding(16.dp)

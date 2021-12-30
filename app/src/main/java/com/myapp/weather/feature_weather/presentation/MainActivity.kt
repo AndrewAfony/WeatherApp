@@ -3,12 +3,17 @@ package com.myapp.weather.feature_weather.presentation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.ui.unit.sp
 import com.myapp.weather.feature_weather.presentation.ui.theme.WeatherTheme
+import com.myapp.weather.feature_weather.presentation.weather_detail.WeatherDetailScreen
+import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "MainActivity"
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     // val focusManager = LocalFocusManager.current
@@ -27,20 +32,16 @@ class MainActivity : ComponentActivity() {
                 )
     */
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
-
+            WeatherTheme {
+                Surface(color = MaterialTheme.colors.background) {
+                    WeatherDetailScreen()
+                }
+            }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-
-    WeatherTheme {
-
     }
 }

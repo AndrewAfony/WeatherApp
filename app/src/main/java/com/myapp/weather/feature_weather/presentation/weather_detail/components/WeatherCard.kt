@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import com.myapp.weather.feature_weather.domain.model.current_weather.CurrentWeather
-import com.myapp.weather.feature_weather.util.test
+import com.myapp.weather.feature_weather.util.getCurrentDate
 
 @Composable
 fun WeatherCard(
@@ -48,7 +48,7 @@ fun WeatherCard(
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = test(),
+                text = getCurrentDate(),
                 color = Color(0x83FFFFFF)
             )
             Text(

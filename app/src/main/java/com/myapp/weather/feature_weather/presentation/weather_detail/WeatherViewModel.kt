@@ -41,9 +41,7 @@ class WeatherViewModel @Inject constructor(
 
     fun onSearch(city: String) {
         searchQuery.value = city
-        searchJob?.cancel()
         searchJob = viewModelScope.launch {
-            delay(500L)
             getCurrentWeather(city)
                 .onEach { result ->
                     when(result) {

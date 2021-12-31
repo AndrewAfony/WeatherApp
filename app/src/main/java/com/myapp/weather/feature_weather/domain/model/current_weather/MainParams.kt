@@ -1,4 +1,4 @@
-package com.myapp.weather.feature_weather.domain.model
+package com.myapp.weather.feature_weather.domain.model.current_weather
 
 data class MainParams(
     val feels_like: Double,

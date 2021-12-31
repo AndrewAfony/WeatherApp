@@ -1,7 +1,5 @@
 package com.myapp.weather.feature_weather.presentation.weather_detail.components
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -16,9 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
-import com.myapp.weather.feature_weather.domain.model.CurrentWeather
-import com.myapp.weather.feature_weather.presentation.weather_detail.CurrentWeatherState
-import com.myapp.weather.feature_weather.util.getCurrentWeather
+import com.myapp.weather.feature_weather.domain.model.current_weather.CurrentWeather
 import com.myapp.weather.feature_weather.util.test
 
 @Composable

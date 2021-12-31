@@ -7,21 +7,19 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Canvas
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.myapp.weather.R
-import com.myapp.weather.feature_weather.domain.model.CurrentWeather
+import com.myapp.weather.feature_weather.domain.model.current_weather.CurrentWeather
 import androidx.compose.foundation.Canvas
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import com.myapp.weather.feature_weather.domain.model.MainParams
-import com.myapp.weather.feature_weather.domain.model.Wind
+import com.myapp.weather.feature_weather.domain.model.current_weather.MainParams
+import com.myapp.weather.feature_weather.domain.model.current_weather.Wind
 import com.myapp.weather.feature_weather.presentation.ui.theme.WeatherTheme
-import com.myapp.weather.feature_weather.presentation.weather_detail.CurrentWeatherState
 
 @Composable
 fun WeatherInfoCard(

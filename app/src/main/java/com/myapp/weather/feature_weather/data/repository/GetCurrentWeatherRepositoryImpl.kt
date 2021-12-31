@@ -2,7 +2,7 @@ package com.myapp.weather.feature_weather.data.repository
 
 import com.myapp.weather.core.util.Resource
 import com.myapp.weather.feature_weather.data.remote.WeatherApi
-import com.myapp.weather.feature_weather.domain.model.CurrentWeather
+import com.myapp.weather.feature_weather.domain.model.current_weather.CurrentWeather
 import com.myapp.weather.feature_weather.domain.repository.GetCurrentWeatherRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

@@ -3,7 +3,9 @@ package com.myapp.weather.feature_weather.di
 import com.myapp.weather.BuildConfig
 import com.myapp.weather.feature_weather.data.remote.WeatherApi
 import com.myapp.weather.feature_weather.data.repository.GetCurrentWeatherRepositoryImpl
+import com.myapp.weather.feature_weather.data.repository.GetWeatherForecastRepositoryImpl
 import com.myapp.weather.feature_weather.domain.repository.GetCurrentWeatherRepository
+import com.myapp.weather.feature_weather.domain.repository.GetWeatherForecastRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,6 +22,12 @@ object WeatherModule {
     @Singleton
     fun provideGetCurrentWeatherRepository(api: WeatherApi): GetCurrentWeatherRepository {
         return GetCurrentWeatherRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetWeatherForecastRepository(api: WeatherApi): GetWeatherForecastRepository {
+        return GetWeatherForecastRepositoryImpl(api)
     }
 
     @Provides

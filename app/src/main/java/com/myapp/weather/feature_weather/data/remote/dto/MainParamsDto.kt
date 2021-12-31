@@ -1,6 +1,6 @@
 package com.myapp.weather.feature_weather.data.remote.dto
 
-import com.myapp.weather.feature_weather.domain.model.MainParams
+import com.myapp.weather.feature_weather.domain.model.current_weather.MainParams
 
 data class MainParamsDto(
     val feels_like: Double,

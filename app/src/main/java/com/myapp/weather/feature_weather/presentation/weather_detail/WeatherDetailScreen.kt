@@ -11,24 +11,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.myapp.weather.feature_weather.presentation.weather_detail.components.ForecastTitle
-import com.myapp.weather.feature_weather.presentation.weather_detail.components.ForecastWeatherItem
-import com.myapp.weather.feature_weather.presentation.weather_detail.components.WeatherCard
-import com.myapp.weather.feature_weather.presentation.weather_detail.components.WeatherInfoCard
+import com.myapp.weather.feature_weather.presentation.weather_detail.components.*
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun WeatherDetailScreen(
-    viewModel: CurrentWeatherViewModel = hiltViewModel()
+    viewModel: WeatherViewModel = hiltViewModel()
 ) {
 
-    val state = viewModel.state.value
+    val currentWeatherState = viewModel.currentWeatherState.value
+    val weatherForecastState = viewModel.weatherForecastState.value
     val scaffoldState = rememberScaffoldState()
 
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
             when(event) {
-                is CurrentWeatherViewModel.UIEvent.ShowSnackbar -> {
+                is WeatherViewModel.UIEvent.ShowSnackbar -> {
                     scaffoldState.snackbarHostState.showSnackbar(
                         message = event.message
                     )
@@ -48,12 +46,12 @@ fun WeatherDetailScreen(
                     .fillMaxSize()
             ) {
                 Text(
-                    text = state.currentWeather?.name ?: "",
+                    text = currentWeatherState.currentWeather?.name ?: "",
                     fontSize = 26.sp,
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-                state.currentWeather?.let { weather ->
+                currentWeatherState.currentWeather?.let { weather ->
                     WeatherCard(weather)
                     Spacer(modifier = Modifier.height(8.dp))
                     WeatherInfoCard(weather)
@@ -61,19 +59,13 @@ fun WeatherDetailScreen(
                 Spacer(Modifier.height(24.dp))
                 ForecastTitle()
                 Spacer(Modifier.height(8.dp))
-                LazyRow(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    item {
-                        // Current
-                    }
-                    items(15) {
-                        ForecastWeatherItem()
-                    }
+                weatherForecastState.weatherForecast?.let { weather ->
+                    WeatherForecastRow(weather)
                 }
             }
-            if (state.isLoading) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            if (currentWeatherState.isLoading) {
+                CircularProgressIndicator(modifier = Modifier
+                    .align(Alignment.Center))
             }
         }
     }

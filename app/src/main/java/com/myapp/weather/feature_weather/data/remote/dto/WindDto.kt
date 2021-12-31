@@ -1,6 +1,6 @@
 package com.myapp.weather.feature_weather.data.remote.dto
 
-import com.myapp.weather.feature_weather.domain.model.Wind
+import com.myapp.weather.feature_weather.domain.model.current_weather.Wind
 
 data class WindDto(
     val speed: Double

@@ -1,10 +1,7 @@
 package com.myapp.weather.feature_weather.presentation.weather_detail.components
 
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -17,30 +14,35 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.myapp.weather.feature_weather.domain.model.forecast_weather.Params
+import com.myapp.weather.feature_weather.util.getTime
 
 @Composable
-fun ForecastWeatherItem() {
+fun ForecastWeatherItem(
+    weather: Params
+) {
 
     Column(
         modifier = Modifier
             .fillMaxHeight()
-            .padding(end = 14.dp)
-            .border(width = 1.dp, color = Color.LightGray.copy(alpha = 0.35f), shape = RoundedCornerShape(6.dp))
+            .border(width = 1.dp, color = Color.LightGray.copy(alpha = 0.35f), shape = RoundedCornerShape(10.dp))
             .padding(vertical = 6.dp, horizontal = 10.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceAround
     ) {
-        Text(
-            text = "12:00",
-            fontSize = 13.sp,
-            color = Color.Gray
-        )
+        weather.dt_txt?.let {
+            Text(
+                text = getTime(it),
+                fontSize = 13.sp,
+                color = Color.Gray
+            )
+        }
         Icon(
             Icons.Default.Web,
             contentDescription = ""
         )
         Text(
-            text = "22°",
+            text = "${weather.main?.temp}°",
             fontSize = 16.sp,
             fontWeight = FontWeight.Medium
         )

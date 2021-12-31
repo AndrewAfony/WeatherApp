@@ -1,6 +1,6 @@
 package com.myapp.weather.feature_weather.data.remote.dto
 
-import com.myapp.weather.feature_weather.domain.model.CurrentWeather
+import com.myapp.weather.feature_weather.domain.model.current_weather.CurrentWeather
 
 data class CurrentWeatherDto(
     val base: String,

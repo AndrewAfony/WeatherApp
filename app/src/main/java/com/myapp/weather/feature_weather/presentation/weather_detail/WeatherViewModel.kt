@@ -4,8 +4,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.myapp.weather.core.util.Resource
-import com.myapp.weather.feature_weather.domain.model.CurrentWeather
 import com.myapp.weather.feature_weather.domain.use_cases.GetCurrentWeatherUseCase
+import com.myapp.weather.feature_weather.domain.use_cases.GetWeatherForecastUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -16,14 +16,18 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CurrentWeatherViewModel @Inject constructor(
-    private val getCurrentWeather: GetCurrentWeatherUseCase
+class WeatherViewModel @Inject constructor(
+    private val getCurrentWeather: GetCurrentWeatherUseCase,
+    private val getWeatherForecast: GetWeatherForecastUseCase
 ): ViewModel() {
 
     var searchQuery = mutableStateOf("")
     private set
 
-    var state = mutableStateOf(CurrentWeatherState())
+    var currentWeatherState = mutableStateOf(CurrentWeatherState())
+    private set
+
+    var weatherForecastState = mutableStateOf(WeatherForecastState())
     private set
 
     var eventFlow = MutableSharedFlow<UIEvent>()
@@ -44,13 +48,13 @@ class CurrentWeatherViewModel @Inject constructor(
                 .onEach { result ->
                     when(result) {
                         is Resource.Success -> {
-                            state.value = state.value.copy(
+                            currentWeatherState.value = currentWeatherState.value.copy(
                                 isLoading = false,
                                 currentWeather = result.data
                             )
                         }
                         is Resource.Error -> {
-                            state.value = state.value.copy(
+                            currentWeatherState.value = currentWeatherState.value.copy(
                                 isLoading = false,
                                 currentWeather = result.data
                             )
@@ -59,17 +63,41 @@ class CurrentWeatherViewModel @Inject constructor(
                             ))
                         }
                         is Resource.Loading -> {
-                            state.value = state.value.copy(
+                            currentWeatherState.value = currentWeatherState.value.copy(
                                 isLoading = true,
                                 currentWeather = result.data
                             )
                         }
                     }
                 }.launchIn(this)
+            getWeatherForecast(city)
+                .onEach { result ->
+                    when(result) {
+                        is Resource.Success -> {
+                            weatherForecastState.value = weatherForecastState.value.copy(
+                                isLoading = false,
+                                weatherForecast = result.data
+                            )
+                        }
+                        is Resource.Error -> {
+                            weatherForecastState.value = weatherForecastState.value.copy(
+                                isLoading = false,
+                                weatherForecast = result.data
+                            )
+                            eventFlow.emit(UIEvent.ShowSnackbar(
+                                message = result.message ?: "Unknown error"
+                            ))
+                        }
+                        is Resource.Loading -> {
+                            weatherForecastState.value = weatherForecastState.value.copy(
+                                isLoading = true,
+                                weatherForecast = result.data
+                            )
+                        }
+                    }
+                }.launchIn(this)
         }
     }
-
-
 
     sealed class UIEvent {
         data class ShowSnackbar(val message: String): UIEvent()

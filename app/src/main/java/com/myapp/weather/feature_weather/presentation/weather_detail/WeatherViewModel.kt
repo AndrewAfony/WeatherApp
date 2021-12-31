@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.myapp.weather.core.util.Resource
 import com.myapp.weather.feature_weather.domain.use_cases.GetCurrentWeatherUseCase
-import com.myapp.weather.feature_weather.domain.use_cases.GetWeatherForecastUseCase
+import com.myapp.weather.feature_weather.domain.use_cases.GetHourlyWeatherForecastUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -18,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class WeatherViewModel @Inject constructor(
     private val getCurrentWeather: GetCurrentWeatherUseCase,
-    private val getWeatherForecast: GetWeatherForecastUseCase
+    private val getWeatherForecast: GetHourlyWeatherForecastUseCase
 ): ViewModel() {
 
     var searchQuery = mutableStateOf("")

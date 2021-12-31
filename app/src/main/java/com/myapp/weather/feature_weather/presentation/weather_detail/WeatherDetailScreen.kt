@@ -3,10 +3,16 @@ package com.myapp.weather.feature_weather.presentation.weather_detail
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.More
+import androidx.compose.material.icons.filled.MoreHoriz
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -37,12 +43,29 @@ fun WeatherDetailScreen(
 
     // TODO("Через BackdropScaffold добавить сохраненные места")
     Scaffold(
-        scaffoldState = scaffoldState
+        scaffoldState = scaffoldState,
+        topBar = {
+            TopAppBar(
+                backgroundColor = Color.Transparent,
+                elevation = 0.dp,
+                title = {},
+                navigationIcon = {
+                    IconButton(onClick = { /*TODO*/ }) {
+                        Icon(Icons.Default.Menu, contentDescription = "")
+                    }
+                },
+                actions = {
+                    IconButton(onClick = { /*TODO*/ }) {
+                        Icon(Icons.Default.MoreHoriz, contentDescription = "")
+                    }
+                }
+            )
+        }
     ) {
         Box(modifier = Modifier.padding(it)) {
             Column(
                 modifier = Modifier
-                    .padding(24.dp)
+                    .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)
                     .fillMaxSize()
             ) {
                 Text(
@@ -56,7 +79,7 @@ fun WeatherDetailScreen(
                     Spacer(modifier = Modifier.height(8.dp))
                     WeatherInfoCard(weather)
                 }
-                Spacer(Modifier.height(24.dp))
+                Spacer(Modifier.height(16.dp))
                 ForecastTitle()
                 Spacer(Modifier.height(8.dp))
                 weatherForecastState.weatherForecast?.let { weather ->

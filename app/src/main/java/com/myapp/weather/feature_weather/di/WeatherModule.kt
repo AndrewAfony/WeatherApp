@@ -1,11 +1,14 @@
 package com.myapp.weather.feature_weather.di
 
 import com.myapp.weather.BuildConfig
+import com.myapp.weather.feature_weather.data.remote.DailyForecastWeatherApi
 import com.myapp.weather.feature_weather.data.remote.WeatherApi
 import com.myapp.weather.feature_weather.data.repository.GetCurrentWeatherRepositoryImpl
+import com.myapp.weather.feature_weather.data.repository.GetDailyWeatherForecastRepositoryImpl
 import com.myapp.weather.feature_weather.data.repository.GetWeatherForecastRepositoryImpl
 import com.myapp.weather.feature_weather.domain.repository.GetCurrentWeatherRepository
-import com.myapp.weather.feature_weather.domain.repository.GetWeatherForecastRepository
+import com.myapp.weather.feature_weather.domain.repository.GetDailyWeatherForecastRepository
+import com.myapp.weather.feature_weather.domain.repository.GetHourlyWeatherForecastRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,8 +29,14 @@ object WeatherModule {
 
     @Provides
     @Singleton
-    fun provideGetWeatherForecastRepository(api: WeatherApi): GetWeatherForecastRepository {
+    fun provideGetHourlyWeatherForecastRepository(api: WeatherApi): GetHourlyWeatherForecastRepository {
         return GetWeatherForecastRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetDailyWeatherForecastRepository(api: DailyForecastWeatherApi): GetDailyWeatherForecastRepository {
+        return GetDailyWeatherForecastRepositoryImpl(api)
     }
 
     @Provides
@@ -38,5 +47,15 @@ object WeatherModule {
             .baseUrl(BuildConfig.BASE_URL)
             .build()
             .create(WeatherApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideWeatherForecastApi(): DailyForecastWeatherApi {
+        return Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(BuildConfig.FORECAST_BASE_URL)
+            .build()
+            .create(DailyForecastWeatherApi::class.java)
     }
 }

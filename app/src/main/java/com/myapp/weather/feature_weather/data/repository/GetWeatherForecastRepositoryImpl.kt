@@ -2,8 +2,8 @@ package com.myapp.weather.feature_weather.data.repository
 
 import com.myapp.weather.core.util.Resource
 import com.myapp.weather.feature_weather.data.remote.WeatherApi
-import com.myapp.weather.feature_weather.domain.model.forecast_weather.ForecastWeather
-import com.myapp.weather.feature_weather.domain.repository.GetWeatherForecastRepository
+import com.myapp.weather.feature_weather.domain.model.hourly_forecast_weather.ForecastWeather
+import com.myapp.weather.feature_weather.domain.repository.GetHourlyWeatherForecastRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
@@ -12,9 +12,9 @@ import javax.inject.Inject
 
 class GetWeatherForecastRepositoryImpl @Inject constructor(
     private val api: WeatherApi
-): GetWeatherForecastRepository {
+): GetHourlyWeatherForecastRepository {
 
-    override fun getWeatherForecast(city: String): Flow<Resource<ForecastWeather>> = flow {
+    override fun getHourlyWeatherForecast(city: String): Flow<Resource<ForecastWeather>> = flow {
 
         emit(Resource.Loading())
 

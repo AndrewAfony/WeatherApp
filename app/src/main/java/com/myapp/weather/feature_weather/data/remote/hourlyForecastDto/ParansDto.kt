@@ -1,6 +1,6 @@
-package com.myapp.weather.feature_weather.data.remote.forecastDto
+package com.myapp.weather.feature_weather.data.remote.hourlyForecastDto
 
-import com.myapp.weather.feature_weather.domain.model.forecast_weather.Params
+import com.myapp.weather.feature_weather.domain.model.hourly_forecast_weather.Params
 
 data class ParamsDto(
     val clouds: Clouds?,

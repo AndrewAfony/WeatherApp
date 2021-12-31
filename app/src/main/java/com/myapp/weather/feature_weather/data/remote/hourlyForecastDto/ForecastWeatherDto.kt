@@ -1,6 +1,6 @@
-package com.myapp.weather.feature_weather.data.remote.forecastDto
+package com.myapp.weather.feature_weather.data.remote.hourlyForecastDto
 
-import com.myapp.weather.feature_weather.domain.model.forecast_weather.ForecastWeather
+import com.myapp.weather.feature_weather.domain.model.hourly_forecast_weather.ForecastWeather
 
 data class ForecastWeatherDto(
     val city: CityDto,

@@ -1,6 +1,6 @@
-package com.myapp.weather.feature_weather.data.remote.forecastDto
+package com.myapp.weather.feature_weather.data.remote.hourlyForecastDto
 
-import com.myapp.weather.feature_weather.domain.model.forecast_weather.City
+import com.myapp.weather.feature_weather.domain.model.hourly_forecast_weather.City
 
 data class CityDto(
     val coord: Coord,
@@ -14,7 +14,7 @@ data class CityDto(
 ){
     fun toCity(): City {
         return City(
-            country, name
+            country.lowercase(), name
         )
     }
 }

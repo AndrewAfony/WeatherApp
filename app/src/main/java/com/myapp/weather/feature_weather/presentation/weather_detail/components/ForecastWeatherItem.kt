@@ -14,7 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.myapp.weather.feature_weather.domain.model.forecast_weather.Params
+import com.myapp.weather.feature_weather.domain.model.hourly_forecast_weather.Params
 import com.myapp.weather.feature_weather.util.getTime
 
 @Composable
@@ -25,8 +25,9 @@ fun ForecastWeatherItem(
     Column(
         modifier = Modifier
             .fillMaxHeight()
+            .padding(end = 14.dp)
             .border(width = 1.dp, color = Color.LightGray.copy(alpha = 0.35f), shape = RoundedCornerShape(10.dp))
-            .padding(vertical = 6.dp, horizontal = 10.dp),
+            .padding(vertical = 6.dp, horizontal = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceAround
     ) {
@@ -34,7 +35,8 @@ fun ForecastWeatherItem(
             Text(
                 text = getTime(it),
                 fontSize = 13.sp,
-                color = Color.Gray
+                color = Color.Gray,
+                fontWeight = FontWeight.Medium
             )
         }
         Icon(

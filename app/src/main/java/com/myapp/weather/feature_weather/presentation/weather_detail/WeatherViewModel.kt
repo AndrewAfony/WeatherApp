@@ -1,7 +1,9 @@
 package com.myapp.weather.feature_weather.presentation.weather_detail
 
 import android.util.Log
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.myapp.weather.core.util.Resource
@@ -19,13 +21,13 @@ class WeatherViewModel @Inject constructor(
     private val getCurrentWeather: GetWeatherUseCase
 ): ViewModel() {
 
-    var searchQuery = mutableStateOf("Moscow")
+    var searchQuery by mutableStateOf("Moscow")
     private set
 
-    var currentWeatherState = mutableStateOf(CurrentWeatherState())
+    var currentWeatherState by mutableStateOf(CurrentWeatherState())
     private set
 
-    var weatherForecastState = mutableStateOf(HourlyForecastState())
+    var weatherForecastState by mutableStateOf(HourlyForecastState())
     private set
 
     var eventFlow = MutableSharedFlow<UIEvent>()
@@ -34,32 +36,32 @@ class WeatherViewModel @Inject constructor(
     private var searchJob: Job? = null
 
     init {
-        onSearch(searchQuery.value)
+        onSearch(searchQuery)
     }
 
     fun onSearch(city: String) {
-        searchQuery.value = city
+        searchQuery = city
         searchJob = viewModelScope.launch {
             getCurrentWeather(city)
                 .onEach { result ->
                     when(result) {
                         is Resource.Success -> {
-                            currentWeatherState.value = currentWeatherState.value.copy(
+                            currentWeatherState = currentWeatherState.copy(
                                 isLoading = false,
                                 currentWeather = result.data
                             )
-                            weatherForecastState.value = weatherForecastState.value.copy(
+                            weatherForecastState = weatherForecastState.copy(
                                 isLoading = false,
                                 weatherForecast = result.data?.forecast?.forecastday?.get(0)?.hour
                             )
                             Log.d("Result", "First screen")
                         }
                         is Resource.Error -> {
-                            currentWeatherState.value = currentWeatherState.value.copy(
+                            currentWeatherState = currentWeatherState.copy(
                                 isLoading = false,
                                 currentWeather = result.data
                             )
-                            weatherForecastState.value = weatherForecastState.value.copy(
+                            weatherForecastState = weatherForecastState.copy(
                                 isLoading = false,
                                 weatherForecast = result.data?.forecast?.forecastday?.get(0)?.hour
                             )
@@ -68,11 +70,11 @@ class WeatherViewModel @Inject constructor(
                             ))
                         }
                         is Resource.Loading -> {
-                            currentWeatherState.value = currentWeatherState.value.copy(
+                            currentWeatherState = currentWeatherState.copy(
                                 isLoading = true,
                                 currentWeather = result.data
                             )
-                            weatherForecastState.value = weatherForecastState.value.copy(
+                            weatherForecastState = weatherForecastState.copy(
                                 isLoading = false,
                                 weatherForecast = result.data?.forecast?.forecastday?.get(0)?.hour
                             )

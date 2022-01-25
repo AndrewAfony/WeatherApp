@@ -1,7 +1,9 @@
 package com.myapp.weather.feature_weather.presentation.daily_weather_forecast
 
 import android.util.Log
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,7 +22,7 @@ class DailyForecastViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ): ViewModel() {
 
-    var state = mutableStateOf(DailyForecastState())  // TODO: 25.01.2022 Переделать все state через by 
+    var state by mutableStateOf(DailyForecastState())  // TODO: 25.01.2022 Переделать все state через by
     private set
 
     var eventFlow = MutableSharedFlow<UIEvent>()
@@ -38,14 +40,14 @@ class DailyForecastViewModel @Inject constructor(
                 .onEach { result ->
                     when(result) {
                         is Resource.Success -> {
-                            state.value = state.value.copy(
+                            state = state.copy(
                                 isLoading = false,
                                 dailyForecast = result.data
                             )
                             Log.d("Result", "Success")
                         }
                         is Resource.Error -> {
-                            state.value = state.value.copy(
+                            state = state.copy(
                                 isLoading = false,
                                 dailyForecast = result.data
                             )
@@ -56,7 +58,7 @@ class DailyForecastViewModel @Inject constructor(
                             Log.d("Result", "Error")
                         }
                         is Resource.Loading -> {
-                            state.value = state.value.copy(
+                            state = state.copy(
                                 isLoading = true,
                                 dailyForecast = result.data
                             )

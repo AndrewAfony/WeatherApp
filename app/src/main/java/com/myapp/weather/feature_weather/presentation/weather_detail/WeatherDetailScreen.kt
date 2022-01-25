@@ -28,10 +28,10 @@ fun WeatherDetailScreen(
     navController: NavController
 ) {
 
-    val currentCity = viewModel.searchQuery.value
+    val currentCity = viewModel.searchQuery
 
-    val currentWeatherState = viewModel.currentWeatherState.value
-    val weatherForecastState = viewModel.weatherForecastState.value
+    val currentWeatherState: CurrentWeatherState = viewModel.currentWeatherState
+    val weatherForecastState: HourlyForecastState = viewModel.weatherForecastState
     val scaffoldState = rememberScaffoldState()
 
     LaunchedEffect(key1 = true) {

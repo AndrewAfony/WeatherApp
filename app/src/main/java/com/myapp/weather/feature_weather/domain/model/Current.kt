@@ -5,7 +5,7 @@ data class Current(
     val feelslike_c: Double,
     val humidity: Int,
     val last_updated: String,
-    val precip_mm: Int,
+    val precip_mm: Double,
     val pressure_mb: Int,
     val temp_c: Int,
     val uv: Int,

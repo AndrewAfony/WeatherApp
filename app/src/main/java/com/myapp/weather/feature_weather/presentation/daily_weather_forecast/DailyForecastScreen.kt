@@ -22,7 +22,7 @@ fun DailyForecastScreen(
     navController: NavController
 ) {
 
-    val state = viewModel.state.value
+    val state = viewModel.state
     val scaffoldState = rememberScaffoldState()
 
     val list = state.dailyForecast?.forecast?.forecastday

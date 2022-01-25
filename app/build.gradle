@@ -25,8 +25,6 @@ android {
 
         buildConfigField "String", "TOKEN", keystoreProperties["TOKEN"]
         buildConfigField "String", "BASE_URL", keystoreProperties["BASE_URL"]
-        buildConfigField "String", "FORECAST_BASE_URL", keystoreProperties["FORECAST_BASE_URL"]
-        buildConfigField "String", "FORECAST_TOKEN", keystoreProperties["FORECAST_TOKEN"]
 
     }
 

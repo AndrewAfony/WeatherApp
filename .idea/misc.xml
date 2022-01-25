@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidStudioProjects/Weather/app/src/main/res/drawable/ic_celsius.xml" value="0.2564814814814815" />
         <entry key="..\:/AndroidStudioProjects/Weather/app/src/main/res/drawable/ic_circle.xml" value="0.22777777777777777" />
+        <entry key="..\:/AndroidStudioProjects/Weather/app/src/main/res/drawable/ic_gauge.xml" value="0.2564814814814815" />
       </map>
     </option>
   </component>

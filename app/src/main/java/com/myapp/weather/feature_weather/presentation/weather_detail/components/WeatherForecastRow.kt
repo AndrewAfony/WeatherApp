@@ -5,26 +5,18 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.myapp.weather.feature_weather.domain.model.hourly_forecast_weather.ForecastWeather
+import com.myapp.weather.feature_weather.domain.model.Hour
+import com.myapp.weather.feature_weather.domain.model.Weather
 
 @Composable
 fun WeatherForecastRow(
-    weather: ForecastWeather
+    weather: List<Hour>
 ) {
     LazyRow(
         modifier = Modifier.fillMaxSize()
     ) {
-        itemsIndexed(weather.forecast) { index, item ->
-
-            if (index == 0) {
-                if (item != null) {
-                    FirstForecastWeatherItem(item)
-                }
-            } else if (index <= 10) {
-                if (item != null) {
-                    ForecastWeatherItem(item)
-                }
-            }
+        itemsIndexed(weather) { index, item ->
+            ForecastWeatherItem(item)
         }
     }
 }

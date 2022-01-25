@@ -17,13 +17,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.myapp.weather.NavigationRoutes
 import com.myapp.weather.feature_weather.presentation.weather_detail.components.*
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun WeatherDetailScreen(
-    viewModel: WeatherViewModel = hiltViewModel()
+    viewModel: WeatherViewModel = hiltViewModel(),
+    navController: NavController
 ) {
+
+    val currentCity = viewModel.searchQuery.value
 
     val currentWeatherState = viewModel.currentWeatherState.value
     val weatherForecastState = viewModel.weatherForecastState.value
@@ -69,7 +74,7 @@ fun WeatherDetailScreen(
                     .fillMaxSize()
             ) {
                 Text(
-                    text = currentWeatherState.currentWeather?.name ?: "",
+                    text = currentWeatherState.currentWeather?.location?.name ?: "City isn't found",
                     fontSize = 26.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -80,7 +85,7 @@ fun WeatherDetailScreen(
                     WeatherInfoCard(weather)
                 }
                 Spacer(Modifier.height(16.dp))
-                ForecastTitle()
+                ForecastTitle(navController = navController, currentCity)
                 Spacer(Modifier.height(8.dp))
                 weatherForecastState.weatherForecast?.let { weather ->
                     WeatherForecastRow(weather)

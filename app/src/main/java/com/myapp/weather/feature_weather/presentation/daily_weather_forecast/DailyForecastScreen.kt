@@ -1,30 +1,31 @@
 package com.myapp.weather.feature_weather.presentation.daily_weather_forecast
 
-import android.widget.Space
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Update
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun DailyForecastScreen(
-    viewModel: DailyForecastViewModel = hiltViewModel()
+    viewModel: DailyForecastViewModel = hiltViewModel(),
+    navController: NavController
 ) {
 
     val state = viewModel.state.value
     val scaffoldState = rememberScaffoldState()
+
+    val list = state.dailyForecast?.forecast?.forecastday
 
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
@@ -39,56 +40,41 @@ fun DailyForecastScreen(
     }
 
     Scaffold(
-        scaffoldState = scaffoldState
+        scaffoldState = scaffoldState,
+        backgroundColor = MaterialTheme.colors.primary
     ) {
         Box(
             modifier = Modifier
                 .padding(it)
-                .background(MaterialTheme.colors.primary)
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                DailyForecastTitle(city = state.dailyForecast?.city_name ?: "Moscow")
+                state.dailyForecast?.location?.let {
+                    DailyForecastTitle(
+                        city = it,
+                        navController = navController
+                    )
+                }
                 Column(
                     modifier = Modifier.padding(16.dp)
                 ) {
                     Text(
                         text = "Next 7 Days",
-                        fontSize = 20.sp
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Medium
                     )
                     Spacer(modifier = Modifier.height(16.dp))
-                    LazyColumn{
-
+                    list?.let {
+                        LazyColumn{
+                            items(it) { item ->
+                                DailyForecastListItem(weather = item)
+                            }
+                        }
                     }
                 }
             }
 
         }
-    }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun prev1() {
-    Box(
-        modifier = Modifier
-            .background(MaterialTheme.colors.primary)
-    ) {
-        Column(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            DailyForecastTitle(city = "Moscow")
-            Column(
-                modifier = Modifier.padding(16.dp)
-            ) {
-                Text(
-                    text = "Next 7 Days",
-                    fontSize = 18.sp
-                )
-            }
-        }
-
     }
 }

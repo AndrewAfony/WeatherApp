@@ -19,9 +19,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.myapp.weather.NavigationRoutes
 
 @Composable
-fun ForecastTitle() {
+fun ForecastTitle(
+    navController: NavController,
+    city: String
+ ) {
 
     Row(
         modifier = Modifier
@@ -40,7 +45,7 @@ fun ForecastTitle() {
             fontSize = 18.sp,
             modifier = Modifier
                 .clip(RoundedCornerShape(4.dp))
-                .clickable {  }
+                .clickable { navController.navigate(NavigationRoutes.WeatherForecastScreen.route + "/${city}") }
                 .padding(4.dp)
         )
     }

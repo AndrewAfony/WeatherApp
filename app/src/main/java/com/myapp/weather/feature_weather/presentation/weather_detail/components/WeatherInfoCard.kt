@@ -1,29 +1,27 @@
 package com.myapp.weather.feature_weather.presentation.weather_detail.components
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.myapp.weather.R
-import com.myapp.weather.feature_weather.domain.model.current_weather.CurrentWeather
-import androidx.compose.foundation.Canvas
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
-import com.myapp.weather.feature_weather.domain.model.current_weather.MainParams
-import com.myapp.weather.feature_weather.domain.model.current_weather.Wind
+import com.myapp.weather.feature_weather.domain.model.Weather
 import com.myapp.weather.feature_weather.presentation.ui.theme.WeatherTheme
 
 @Composable
 fun WeatherInfoCard(
-    weather: CurrentWeather
+    weather: Weather
 ) {
 
     Card(
@@ -64,12 +62,12 @@ fun WeatherInfoCard(
                WeatherInfoCardItem(
                    icon = R.drawable.ic_wind,
                    title = "WIND",
-                   value = "${weather.wind.speed} m/s"
+                   value = "${weather.current.wind_kph} m/s"
                )
                WeatherInfoCardItem(
                    icon = R.drawable.ic_thermometer,
                    title = "FEELS LIKE",
-                   value = "${weather.main.feels_like}°"
+                   value = "${weather.current.feelslike_c}°"
                )
             }
             Spacer(modifier = Modifier.height(12.dp))
@@ -80,14 +78,14 @@ fun WeatherInfoCard(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 WeatherInfoCardItem(
-                    icon = R.drawable.ic_thermometer_up,
-                    title = "TEST",
-                    value = "14°"
+                    icon = R.drawable.ic_uv_index,
+                    title = "UV INDEX",
+                    value = "${weather.current.uv}"
                 )
                 WeatherInfoCardItem(
                     icon = R.drawable.ic_gauge,
                     title = "PRESSURE",
-                    value = "${weather.main.pressure} mbar"
+                    value = "${weather.current.pressure_mb} mbar"
                 )
             }
         }
@@ -127,13 +125,5 @@ fun WeatherInfoCardItem(
                 fontSize = 13.sp
             )
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    WeatherTheme {
-        WeatherInfoCard(weather = CurrentWeather(main = MainParams(10.0, 10, 10, 10.0, 10.0, 10.0), name = "Moscow", timezone = 0, weather = emptyList(), wind = Wind(10.0)))
     }
 }

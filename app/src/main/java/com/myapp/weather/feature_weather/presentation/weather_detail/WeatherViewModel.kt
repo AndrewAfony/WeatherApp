@@ -1,14 +1,13 @@
 package com.myapp.weather.feature_weather.presentation.weather_detail
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.myapp.weather.core.util.Resource
-import com.myapp.weather.feature_weather.domain.use_cases.GetCurrentWeatherUseCase
-import com.myapp.weather.feature_weather.domain.use_cases.GetHourlyWeatherForecastUseCase
+import com.myapp.weather.feature_weather.domain.use_cases.GetWeatherUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -17,17 +16,16 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WeatherViewModel @Inject constructor(
-    private val getCurrentWeather: GetCurrentWeatherUseCase,
-    private val getWeatherForecast: GetHourlyWeatherForecastUseCase
+    private val getCurrentWeather: GetWeatherUseCase
 ): ViewModel() {
 
-    var searchQuery = mutableStateOf("")
+    var searchQuery = mutableStateOf("Moscow")
     private set
 
     var currentWeatherState = mutableStateOf(CurrentWeatherState())
     private set
 
-    var weatherForecastState = mutableStateOf(WeatherForecastState())
+    var weatherForecastState = mutableStateOf(HourlyForecastState())
     private set
 
     var eventFlow = MutableSharedFlow<UIEvent>()
@@ -36,7 +34,7 @@ class WeatherViewModel @Inject constructor(
     private var searchJob: Job? = null
 
     init {
-        onSearch("Moscow")
+        onSearch(searchQuery.value)
     }
 
     fun onSearch(city: String) {
@@ -50,11 +48,20 @@ class WeatherViewModel @Inject constructor(
                                 isLoading = false,
                                 currentWeather = result.data
                             )
+                            weatherForecastState.value = weatherForecastState.value.copy(
+                                isLoading = false,
+                                weatherForecast = result.data?.forecast?.forecastday?.get(0)?.hour
+                            )
+                            Log.d("Result", "First screen")
                         }
                         is Resource.Error -> {
                             currentWeatherState.value = currentWeatherState.value.copy(
                                 isLoading = false,
                                 currentWeather = result.data
+                            )
+                            weatherForecastState.value = weatherForecastState.value.copy(
+                                isLoading = false,
+                                weatherForecast = result.data?.forecast?.forecastday?.get(0)?.hour
                             )
                             eventFlow.emit(UIEvent.ShowSnackbar(
                                 message = result.message ?: "Unknown error"
@@ -65,31 +72,9 @@ class WeatherViewModel @Inject constructor(
                                 isLoading = true,
                                 currentWeather = result.data
                             )
-                        }
-                    }
-                }.launchIn(this)
-            getWeatherForecast(city)
-                .onEach { result ->
-                    when(result) {
-                        is Resource.Success -> {
                             weatherForecastState.value = weatherForecastState.value.copy(
                                 isLoading = false,
-                                weatherForecast = result.data
-                            )
-                        }
-                        is Resource.Error -> {
-                            weatherForecastState.value = weatherForecastState.value.copy(
-                                isLoading = false,
-                                weatherForecast = result.data
-                            )
-                            eventFlow.emit(UIEvent.ShowSnackbar(
-                                message = result.message ?: "Unknown error"
-                            ))
-                        }
-                        is Resource.Loading -> {
-                            weatherForecastState.value = weatherForecastState.value.copy(
-                                isLoading = true,
-                                weatherForecast = result.data
+                                weatherForecast = result.data?.forecast?.forecastday?.get(0)?.hour
                             )
                         }
                     }

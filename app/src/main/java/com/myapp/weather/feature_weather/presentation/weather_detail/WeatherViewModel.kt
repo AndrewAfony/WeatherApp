@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.myapp.weather.core.util.Resource
@@ -18,11 +19,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WeatherViewModel @Inject constructor(
-    private val getCurrentWeather: GetWeatherUseCase
+    private val getCurrentWeather: GetWeatherUseCase,
+    savedStateHandle: SavedStateHandle
 ): ViewModel() {
 
-    var searchQuery by mutableStateOf("Moscow")
-    private set
+    var location by mutableStateOf("Нижний Новгород")
 
     var currentWeatherState by mutableStateOf(CurrentWeatherState())
     private set
@@ -36,11 +37,13 @@ class WeatherViewModel @Inject constructor(
     private var searchJob: Job? = null
 
     init {
-        onSearch(searchQuery)
+        savedStateHandle.get<String>("city")?.let { city ->
+            location = city
+            onUpdate(location)
+        }
     }
 
-    fun onSearch(city: String) {
-        searchQuery = city
+    private fun onUpdate(city: String) {
         searchJob = viewModelScope.launch {
             getCurrentWeather(city)
                 .onEach { result ->

@@ -4,10 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.More
-import androidx.compose.material.icons.filled.MoreHoriz
-import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -28,7 +25,7 @@ fun WeatherDetailScreen(
     navController: NavController
 ) {
 
-    val currentCity = viewModel.searchQuery
+    val currentCity = viewModel.location
 
     val currentWeatherState: CurrentWeatherState = viewModel.currentWeatherState
     val weatherForecastState: HourlyForecastState = viewModel.weatherForecastState
@@ -55,13 +52,13 @@ fun WeatherDetailScreen(
                 elevation = 0.dp,
                 title = {},
                 navigationIcon = {
-                    IconButton(onClick = { /*TODO*/ }) {
-                        Icon(Icons.Default.Menu, contentDescription = "")
+                    IconButton(onClick = { navController.navigate(NavigationRoutes.CitySearchScreen.route) }) {
+                        Icon(Icons.Default.Search, contentDescription = "Searching button")
                     }
                 },
                 actions = {
                     IconButton(onClick = { /*TODO*/ }) {
-                        Icon(Icons.Default.MoreHoriz, contentDescription = "")
+                        Icon(Icons.Default.MoreHoriz, contentDescription = "More button")
                     }
                 }
             )
@@ -92,7 +89,8 @@ fun WeatherDetailScreen(
                 }
             }
             if (currentWeatherState.isLoading) {
-                CircularProgressIndicator(modifier = Modifier
+                CircularProgressIndicator(
+                    modifier = Modifier
                     .align(Alignment.Center))
             }
         }

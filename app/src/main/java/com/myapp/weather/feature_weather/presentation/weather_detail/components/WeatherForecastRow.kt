@@ -7,6 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.myapp.weather.feature_weather.domain.model.Hour
 import com.myapp.weather.feature_weather.domain.model.Weather
+import com.myapp.weather.feature_weather.util.getCurrentTime
+import com.myapp.weather.feature_weather.util.getTime
 
 @Composable
 fun WeatherForecastRow(
@@ -16,7 +18,13 @@ fun WeatherForecastRow(
         modifier = Modifier.fillMaxSize()
     ) {
         itemsIndexed(weather) { index, item ->
-            ForecastWeatherItem(item)
+            if (index >= getCurrentTime().toInt() - 2) {
+                if(getTime(item.time).substringBefore(":") == getCurrentTime()) {
+                    FirstForecastWeatherItem(weather = item)
+                } else {
+                    ForecastWeatherItem(item)
+                }
+            }
         }
     }
 }

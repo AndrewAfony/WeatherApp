@@ -1,6 +1,7 @@
 package com.myapp.weather.feature_weather.data.remote
 
 import com.myapp.weather.BuildConfig
+import com.myapp.weather.feature_weather.data.remote.cityDto.CityItemDto
 import com.myapp.weather.feature_weather.data.remote.weatherDto.WeatherDto
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -13,4 +14,10 @@ interface WeatherApi {
         @Query("q") city: String = "Moscow",
         @Query("days") days: Int = 7
     ): WeatherDto
+
+    @GET("v1/search.json")
+    suspend fun searchCity(
+        @Query("key") apiKey: String = BuildConfig.TOKEN,
+        @Query("q") city: String
+    ): List<CityItemDto>
 }

@@ -56,7 +56,7 @@ fun WeatherCard(
                 color = Color(0x83FFFFFF)
             )
             Text(
-                text = "${weather.current.temp_c}°",
+                text = "${weather.current.temp_c.toInt()}°",
                 fontSize = 64.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier

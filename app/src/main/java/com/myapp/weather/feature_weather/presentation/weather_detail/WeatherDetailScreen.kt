@@ -1,5 +1,6 @@
 package com.myapp.weather.feature_weather.presentation.weather_detail
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.*
@@ -89,9 +90,15 @@ fun WeatherDetailScreen(
                 }
             }
             if (currentWeatherState.isLoading) {
-                CircularProgressIndicator(
+                Box(
                     modifier = Modifier
-                    .align(Alignment.Center))
+                        .fillMaxSize()
+                        .background(Color.White)
+                ) {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .align(Alignment.Center))
+                }
             }
         }
     }

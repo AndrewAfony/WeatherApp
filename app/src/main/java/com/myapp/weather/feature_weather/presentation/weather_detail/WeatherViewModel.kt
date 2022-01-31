@@ -37,6 +37,9 @@ class WeatherViewModel @Inject constructor(
     private var searchJob: Job? = null
 
     init {
+        if(savedStateHandle.get<String>("city") == null)
+            onUpdate("Нижний Новгород")
+
         savedStateHandle.get<String>("city")?.let { city ->
             location = city
             onUpdate(location)

@@ -46,7 +46,7 @@ class WeatherViewModel @Inject constructor(
         }
     }
 
-    private fun onUpdate(city: String) {
+    fun onUpdate(city: String) {
         searchJob = viewModelScope.launch {
             getCurrentWeather(city)
                 .onEach { result ->

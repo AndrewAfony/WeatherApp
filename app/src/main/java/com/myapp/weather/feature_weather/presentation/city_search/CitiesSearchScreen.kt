@@ -86,7 +86,6 @@ fun CitiesSearchScreen(
                                     }
                             )
                             Divider()
-
                         }
                     }
                 }

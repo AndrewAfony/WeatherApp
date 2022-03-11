@@ -60,7 +60,7 @@ fun DailyForecastScreen(
                     modifier = Modifier.padding(16.dp)
                 ) {
                     Text(
-                        text = "Next 7 Days",
+                        text = "Next 3 Days",
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Medium
                     )

@@ -40,7 +40,7 @@ fun ForecastTitle(
             fontSize = 18.sp
         )
         Text(
-            text = "Next 7 Days ›",
+            text = "Next 3 Days ›",
             color = MaterialTheme.colors.onBackground.copy(alpha = 0.6f),
             fontSize = 18.sp,
             modifier = Modifier
